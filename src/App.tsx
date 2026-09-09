@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Volume2, VolumeX, Sparkles } from 'lucide-react';
-import { PRODUCTS, REDIRECT_URL } from './data/products';
+import { PRODUCTS } from './data/products';
 import { Product } from './types';
 import { RouletteWheel } from './components/RouletteWheel';
 import { WinnerModal } from './components/WinnerModal';
@@ -89,18 +89,8 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-zinc-900 py-4 text-center text-xs text-zinc-400">
-        <p>
-          Após o sorteio, o participante é redirecionado para{' '}
-          <a
-            href={REDIRECT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-amber-400 hover:underline font-medium"
-          >
-            inlead.digital/olimpo
-          </a>
-        </p>
+      <footer className="relative z-10 border-t border-zinc-900 py-4 text-center text-xs text-zinc-500">
+        <p>Roleta Imparável • Sorteio Exclusivo de Produtos</p>
       </footer>
 
       {/* Winner and Redirect Modal */}
