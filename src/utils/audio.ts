@@ -26,6 +26,10 @@ export function getMuteState(): boolean {
   return isMuted;
 }
 
+export function warmAudioContext() {
+  getAudioContext();
+}
+
 export function playTickSound(velocityRatio = 1) {
   if (isMuted) return;
   const ctx = getAudioContext();
