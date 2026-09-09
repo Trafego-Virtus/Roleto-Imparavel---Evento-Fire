@@ -1,17 +1,13 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import confetti from 'canvas-confetti';
-import { ExternalLink } from 'lucide-react';
 import { Product } from '../types';
 import { playTickSound, playWinSound } from '../utils/audio';
-import { REDIRECT_URL } from '../data/products';
 
 interface RouletteWheelProps {
   products: Product[];
   onSpinEnd: (product: Product) => void;
   isSpinning: boolean;
   setIsSpinning: (spinning: boolean) => void;
-  hasSpun: boolean;
-  wonProduct: Product | null;
 }
 
 // Convert polar to cartesian coordinates (0° is 12 o'clock, clockwise)
@@ -59,27 +55,14 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
   onSpinEnd,
   isSpinning,
   setIsSpinning,
-  hasSpun,
-  wonProduct,
 }) => {
   const totalSlices = products.length;
   const sliceAngle = 360 / totalSlices;
 
-  // Initialize resting rotation to won product if already spun previously
-  const getInitialRotation = (): number => {
-    if (wonProduct) {
-      const idx = products.findIndex((p) => p.id === wonProduct.id);
-      if (idx !== -1) {
-        return (360 - (idx + 0.5) * sliceAngle) % 360;
-      }
-    }
-    return 0;
-  };
-
-  const [rotation, setRotation] = useState<number>(getInitialRotation);
+  const [rotation, setRotation] = useState<number>(0);
   const [needleAngle, setNeedleAngle] = useState<number>(0);
 
-  const rotationRef = useRef<number>(getInitialRotation());
+  const rotationRef = useRef<number>(0);
   const animationFrameRef = useRef<number | null>(null);
   const lastSliceRef = useRef<number>(-1);
 
@@ -137,8 +120,8 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
   };
 
   const spin = useCallback(() => {
-    // Prevent spinning if already spun once or currently spinning
-    if (isSpinning || hasSpun) return;
+    // Prevent spinning if currently spinning
+    if (isSpinning) return;
 
     setIsSpinning(true);
 
@@ -202,7 +185,7 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
     };
 
     animationFrameRef.current = requestAnimationFrame(animate);
-  }, [isSpinning, hasSpun, totalSlices, products, sliceAngle, setIsSpinning, onSpinEnd]);
+  }, [isSpinning, totalSlices, products, sliceAngle, setIsSpinning, onSpinEnd]);
 
   useEffect(() => {
     return () => {
@@ -404,11 +387,11 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
           <g
             id="center-hub-button"
             className={`transition-transform duration-200 ${
-              isSpinning || hasSpun
+              isSpinning
                 ? 'opacity-90 cursor-default'
                 : 'cursor-pointer hover:scale-105 active:scale-95'
             }`}
-            onClick={hasSpun || isSpinning ? undefined : spin}
+            onClick={isSpinning ? undefined : spin}
           >
             {/* Outer Hub Ring */}
             <circle
@@ -452,7 +435,7 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
                 fontFamily: 'system-ui, sans-serif',
               }}
             >
-              {isSpinning ? 'GIRANDO' : hasSpun ? 'OLIMPO' : 'GIRAR'}
+              {isSpinning ? 'GIRANDO' : 'GIRAR'}
             </text>
           </g>
         </svg>
@@ -460,44 +443,26 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
 
       {/* Main Action Button Below Wheel */}
       <div className="mt-3 sm:mt-4 w-full max-w-xs sm:max-w-sm px-2 sm:px-4">
-        {hasSpun && wonProduct ? (
-          <div className="flex flex-col items-center gap-2.5 sm:gap-3 w-full animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <div className="w-full text-center py-2 px-3 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[11px] sm:text-xs font-bold uppercase tracking-wider">
-              Produto Sorteado: {wonProduct.name}
-            </div>
-            <a
-              id="btn-claim-product-wheel"
-              href={REDIRECT_URL}
-              target="_top"
-              rel="noopener noreferrer"
-              className="w-full py-3.5 sm:py-4 px-4 sm:px-6 rounded-2xl font-black text-sm sm:text-base md:text-lg tracking-wider uppercase transition-all duration-300 shadow-xl cursor-pointer bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] border border-amber-200 flex items-center justify-center gap-2"
-            >
-              <span>Pegue o seu produto aqui</span>
-              <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-            </a>
-          </div>
-        ) : (
-          <button
-            id="btn-spin-wheel"
-            type="button"
-            disabled={isSpinning || hasSpun}
-            onClick={spin}
-            className={`w-full py-3.5 sm:py-4 px-4 sm:px-6 rounded-2xl font-extrabold text-sm sm:text-base md:text-lg tracking-wider uppercase transition-all duration-300 shadow-xl cursor-pointer ${
-              isSpinning || hasSpun
-                ? 'bg-zinc-800 text-zinc-500 border border-zinc-700 cursor-not-allowed scale-[0.98]'
-                : 'bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] border border-amber-300'
-            }`}
-          >
-            {isSpinning ? (
-              <span className="flex items-center justify-center gap-2">
-                <span className="h-4 w-4 rounded-full border-2 border-zinc-500 border-t-amber-400 animate-spin" />
-                Sorteando Produto...
-              </span>
-            ) : (
-              'Girar a Roleta (Giro Único)'
-            )}
-          </button>
-        )}
+        <button
+          id="btn-spin-wheel"
+          type="button"
+          disabled={isSpinning}
+          onClick={spin}
+          className={`w-full py-3.5 sm:py-4 px-4 sm:px-6 rounded-2xl font-extrabold text-sm sm:text-base md:text-lg tracking-wider uppercase transition-all duration-300 shadow-xl cursor-pointer ${
+            isSpinning
+              ? 'bg-zinc-800 text-zinc-500 border border-zinc-700 cursor-not-allowed scale-[0.98]'
+              : 'bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] border border-amber-300'
+          }`}
+        >
+          {isSpinning ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="h-4 w-4 rounded-full border-2 border-zinc-500 border-t-amber-400 animate-spin" />
+              Sorteando Produto...
+            </span>
+          ) : (
+            'Girar a Roleta'
+          )}
+        </button>
       </div>
     </div>
   );

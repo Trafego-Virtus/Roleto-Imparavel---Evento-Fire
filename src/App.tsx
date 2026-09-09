@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Volume2, VolumeX, Sparkles } from 'lucide-react';
 import { PRODUCTS, REDIRECT_URL } from './data/products';
 import { Product } from './types';
@@ -8,42 +8,29 @@ import { ProductCardList } from './components/ProductCardList';
 import { toggleMute, getMuteState } from './utils/audio';
 
 export default function App() {
-  const [hasSpun, setHasSpun] = useState<boolean>(() => {
-    try {
-      return typeof window !== 'undefined' && localStorage.getItem('olimpo_has_spun') === 'true';
-    } catch {
-      return false;
-    }
-  });
-
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(() => {
-    try {
-      if (typeof window !== 'undefined') {
-        const savedId = localStorage.getItem('olimpo_won_product_id');
-        if (savedId) {
-          return PRODUCTS.find((p) => p.id === savedId) || null;
-        }
-      }
-    } catch {
-      // ignore
-    }
-    return null;
-  });
-
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(getMuteState());
 
-  const handleSpinEnd = (product: Product) => {
-    setSelectedProduct(product);
-    setHasSpun(true);
+  // Clear any previous single-spin locks so the event wheel can run freely
+  useEffect(() => {
     try {
-      localStorage.setItem('olimpo_has_spun', 'true');
-      localStorage.setItem('olimpo_won_product_id', product.id);
+      localStorage.removeItem('olimpo_has_spun');
+      localStorage.removeItem('olimpo_won_product_id');
     } catch {
       // ignore
     }
+  }, []);
+
+  const handleSpinEnd = (product: Product) => {
+    setSelectedProduct(product);
     setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
   };
 
   const handleToggleSound = () => {
@@ -79,12 +66,10 @@ export default function App() {
             Sorteio Exclusivo
           </div>
           <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-1.5 sm:mb-2">
-            Gire a Roleta de Produtos
+            Gire a Roleta Imparável
           </h1>
           <p className="text-xs sm:text-sm text-zinc-400 max-w-sm sm:max-w-lg mx-auto leading-relaxed">
-            {hasSpun && selectedProduct
-              ? `Você já realizou o seu giro único e foi contemplado com o produto ${selectedProduct.name}.`
-              : 'Descubra qual produto estratégico foi escolhido para acelerar sua jornada. Cada participante possui direito a um único giro.'}
+            Descubra qual produto estratégico foi escolhido para acelerar sua jornada rumo ao topo.
           </p>
         </div>
 
@@ -94,14 +79,12 @@ export default function App() {
           onSpinEnd={handleSpinEnd}
           isSpinning={isSpinning}
           setIsSpinning={setIsSpinning}
-          hasSpun={hasSpun}
-          wonProduct={selectedProduct}
         />
 
         {/* List of Products on the Wheel */}
         <ProductCardList
           products={PRODUCTS}
-          activeProduct={selectedProduct}
+          activeProduct={null}
         />
       </main>
 
@@ -124,6 +107,7 @@ export default function App() {
       <WinnerModal
         product={selectedProduct}
         isOpen={isModalOpen}
+        onClose={handleCloseModal}
       />
     </div>
   );

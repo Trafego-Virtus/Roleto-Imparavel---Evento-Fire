@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { ExternalLink, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, Sparkles, CheckCircle2, X } from 'lucide-react';
 import { Product } from '../types';
 import { REDIRECT_URL } from '../data/products';
 
 interface WinnerModalProps {
   product: Product | null;
   isOpen: boolean;
+  onClose?: () => void;
 }
 
 export const WinnerModal: React.FC<WinnerModalProps> = ({
   product,
   isOpen,
+  onClose,
 }) => {
   const [countdown, setCountdown] = useState<number>(4);
 
@@ -62,6 +64,19 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
         id="winner-modal-card"
         className="relative w-full max-w-lg max-h-[92vh] overflow-y-auto rounded-2xl sm:rounded-3xl border border-amber-500/50 bg-gradient-to-b from-zinc-900 via-zinc-900/98 to-black p-4 xs:p-6 sm:p-8 text-white shadow-2xl shadow-amber-500/20"
       >
+        {/* Close button for multiple uses during events */}
+        {onClose && (
+          <button
+            id="btn-close-modal"
+            type="button"
+            onClick={onClose}
+            title="Fechar / Novo Giro"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 p-2 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
+
         {/* Glow ambient effects */}
         <div
           className="absolute -top-24 -left-24 h-48 w-48 rounded-full blur-3xl opacity-30 pointer-events-none"
@@ -99,7 +114,7 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
           </div>
 
           <p className="text-zinc-300 text-xs sm:text-sm md:text-base mb-4 sm:mb-6 leading-relaxed">
-            Seu giro único foi concluído com sucesso. Clique no botão abaixo para garantir e resgatar o seu produto no <strong className="text-amber-300">Olimpo</strong>.
+            Clique no botão abaixo para garantir e resgatar o seu produto no <strong className="text-amber-300">Olimpo</strong>.
           </p>
 
           {/* Countdown timer & progress */}
@@ -121,7 +136,7 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
           </div>
 
           {/* Single Action Button: Pegue o seu produto aqui */}
-          <div className="flex flex-col gap-3 items-stretch">
+          <div className="flex flex-col gap-2.5 items-stretch">
             <a
               id="btn-access-olimpo"
               href={REDIRECT_URL}
@@ -136,6 +151,16 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
               <span>Pegue o seu produto aqui</span>
               <ExternalLink className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
             </a>
+
+            {onClose && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="py-2.5 px-4 text-xs sm:text-sm font-semibold text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              >
+                Girar Novamente / Próximo Participante
+              </button>
+            )}
           </div>
         </div>
       </div>

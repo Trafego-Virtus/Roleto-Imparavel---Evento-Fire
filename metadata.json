@@ -1,6 +1,6 @@
 {
-  "name": "Roleta de Produtos",
-  "description": "Gire a roleta de produtos e descubra sua oportunidade para acessar o Olimpo.",
+  "name": "Roleta Imparável",
+  "description": "Gire a Roleta Imparável e descubra sua oportunidade para acessar o Olimpo.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
