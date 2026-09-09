@@ -88,12 +88,12 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
             </p>
 
             {/* QR Code Image */}
-            <div className="p-3 bg-white rounded-xl shadow-lg border border-zinc-200">
+            <div className="p-4 bg-white rounded-2xl shadow-xl border border-zinc-200 flex items-center justify-center">
               <img
                 id="img-qr-code"
-                src="/formulario-roleta-imparavel.png"
+                src="/formulario-roleta-imparavel.svg"
                 alt="QR Code Formulário Roleta Imparável"
-                className="w-44 h-44 sm:w-52 sm:h-52 object-contain block mx-auto"
+                className="w-48 h-48 sm:w-56 sm:h-56 object-contain block mx-auto"
                 referrerPolicy="no-referrer"
               />
             </div>
