@@ -55,22 +55,19 @@ export const WinnerModal: React.FC<WinnerModalProps> = ({
           {/* Prominent Winning Product Name */}
           <div
             id="winning-product-badge"
-            className="w-full mb-4 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 relative overflow-hidden"
+            className="w-full mb-4 p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 relative overflow-hidden"
             style={{
               backgroundColor: `${product.color}18`,
               borderColor: product.color,
               boxShadow: `0 10px 30px -8px ${product.color}40`,
             }}
           >
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" style={{ color: product.color }} />
-              <h2 className="text-xl xs:text-2xl sm:text-3xl font-black tracking-tight text-white drop-shadow-md">
+            <div className="flex items-center justify-center gap-2 sm:gap-3">
+              <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7 shrink-0" style={{ color: product.color }} />
+              <h2 className="text-2xl xs:text-3xl sm:text-4xl font-black tracking-tight text-white drop-shadow-md">
                 {product.name}
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-zinc-300 font-medium">
-              {product.tagline}
-            </p>
           </div>
 
           {/* QR Code Section */}
