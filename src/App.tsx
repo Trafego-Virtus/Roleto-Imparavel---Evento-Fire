@@ -4,7 +4,6 @@ import { PRODUCTS } from './data/products';
 import { Product } from './types';
 import { RouletteWheel } from './components/RouletteWheel';
 import { WinnerModal } from './components/WinnerModal';
-import { ProductCardList } from './components/ProductCardList';
 import { toggleMute, getMuteState } from './utils/audio';
 
 export default function App() {
@@ -79,12 +78,6 @@ export default function App() {
           onSpinEnd={handleSpinEnd}
           isSpinning={isSpinning}
           setIsSpinning={setIsSpinning}
-        />
-
-        {/* List of Products on the Wheel */}
-        <ProductCardList
-          products={PRODUCTS}
-          activeProduct={null}
         />
       </main>
 

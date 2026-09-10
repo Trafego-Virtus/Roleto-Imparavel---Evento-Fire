@@ -229,15 +229,15 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
   return (
     <div className="relative flex flex-col items-center justify-center select-none">
       {/* Ambient background glow behind wheel */}
-      <div className="absolute -inset-6 rounded-full bg-gradient-to-tr from-amber-500/20 via-yellow-500/10 to-amber-600/20 blur-3xl pointer-events-none" />
+      <div className="absolute -inset-10 rounded-full bg-gradient-to-tr from-amber-500/20 via-yellow-500/10 to-amber-600/20 blur-3xl pointer-events-none" />
 
-      {/* Wheel Container */}
-      <div className="relative w-full max-w-[310px] xs:max-w-[360px] sm:max-w-[440px] md:max-w-[480px] aspect-square p-1 sm:p-2">
+      {/* Wheel Container - Enlarged for maximum impact and visibility */}
+      <div className="relative w-full max-w-[340px] xs:max-w-[400px] sm:max-w-[500px] md:max-w-[580px] lg:max-w-[640px] xl:max-w-[680px] aspect-square p-1 sm:p-2">
         {/* Needle / Ticker Pointer at 12 o'clock */}
         <div
           id="roulette-pointer"
           ref={pointerRef}
-          className="absolute left-1/2 top-0 z-30 drop-shadow-2xl w-7 xs:w-8 sm:w-10 md:w-11 pointer-events-none"
+          className="absolute left-1/2 top-0 z-30 drop-shadow-2xl w-8 xs:w-9 sm:w-11 md:w-12 lg:w-14 pointer-events-none"
           style={{
             transform: 'translateX(-50%) rotate(0deg)',
             transformOrigin: '50% 18%',
@@ -544,7 +544,7 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
       </div>
 
       {/* Main Action Button Below Wheel */}
-      <div className="mt-3 sm:mt-4 w-full max-w-xs sm:max-w-sm px-2 sm:px-4">
+      <div className="mt-4 sm:mt-6 w-full max-w-xs sm:max-w-md px-2 sm:px-4">
         <button
           id="btn-spin-wheel"
           type="button"
