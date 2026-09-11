@@ -59,13 +59,14 @@ export default function App() {
       {/* Main Content Hero */}
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center py-5 sm:py-8 px-2 sm:px-4 max-w-5xl mx-auto w-full">
         {/* Title Section */}
-        <div className="text-center max-w-2xl mx-auto mb-4 sm:mb-6 px-2">
+        <div className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 px-2">
           <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3">
             <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
             Sorteio Exclusivo
           </div>
-          <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white">
-            Gire a Roleta e GANHE 1 Curso Agora
+          <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight [text-wrap:balance]">
+            <span className="inline-block">Gire a Roleta e GANHE</span>{' '}
+            <span className="inline-block">1 Treinamento Agora</span>
           </h1>
         </div>
 
