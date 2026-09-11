@@ -65,8 +65,8 @@ export default function App() {
             Sorteio Exclusivo
           </div>
           <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            <span className="block">Gire a Roleta</span>
-            <span className="block mt-1 sm:mt-2">e GANHE 1 Treinamento Agora</span>
+            <span className="block">Gire a Roleta e Ganhe</span>
+            <span className="block mt-1 sm:mt-2">1 Treinamento Agora</span>
           </h1>
         </div>
 
