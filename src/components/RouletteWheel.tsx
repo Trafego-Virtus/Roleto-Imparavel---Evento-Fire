@@ -229,15 +229,15 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
   return (
     <div className="relative flex flex-col items-center justify-center select-none">
       {/* Ambient background glow behind wheel */}
-      <div className="absolute -inset-10 rounded-full bg-gradient-to-tr from-amber-500/20 via-yellow-500/10 to-amber-600/20 blur-3xl pointer-events-none" />
+      <div className="absolute -inset-12 rounded-full bg-gradient-to-tr from-amber-500/20 via-yellow-500/10 to-amber-600/20 blur-3xl pointer-events-none" />
 
       {/* Wheel Container - Enlarged for maximum impact and visibility */}
-      <div className="relative w-full max-w-[340px] xs:max-w-[400px] sm:max-w-[500px] md:max-w-[580px] lg:max-w-[640px] xl:max-w-[680px] aspect-square p-1 sm:p-2">
+      <div className="relative w-full max-w-[360px] xs:max-w-[440px] sm:max-w-[540px] md:max-w-[640px] lg:max-w-[740px] xl:max-w-[800px] 2xl:max-w-[840px] aspect-square p-1 sm:p-2">
         {/* Needle / Ticker Pointer at 12 o'clock */}
         <div
           id="roulette-pointer"
           ref={pointerRef}
-          className="absolute left-1/2 top-0 z-30 drop-shadow-2xl w-8 xs:w-9 sm:w-11 md:w-12 lg:w-14 pointer-events-none"
+          className="absolute left-1/2 top-0 z-30 drop-shadow-2xl w-9 xs:w-10 sm:w-12 md:w-14 lg:w-16 xl:w-[4.25rem] pointer-events-none"
           style={{
             transform: 'translateX(-50%) rotate(0deg)',
             transformOrigin: '50% 18%',
@@ -544,13 +544,13 @@ export const RouletteWheel: React.FC<RouletteWheelProps> = ({
       </div>
 
       {/* Main Action Button Below Wheel */}
-      <div className="mt-4 sm:mt-6 w-full max-w-xs sm:max-w-md px-2 sm:px-4">
+      <div className="mt-8 sm:mt-10 md:mt-12 w-full max-w-sm sm:max-w-md md:max-w-lg px-2 sm:px-4">
         <button
           id="btn-spin-wheel"
           type="button"
           disabled={isSpinning}
           onClick={spin}
-          className={`w-full py-3.5 sm:py-4 px-4 sm:px-6 rounded-2xl font-extrabold text-sm sm:text-base md:text-lg tracking-wider uppercase transition-all duration-300 shadow-xl cursor-pointer ${
+          className={`w-full py-4 sm:py-5 px-6 sm:px-8 rounded-2xl font-extrabold text-base sm:text-lg md:text-xl tracking-wider uppercase transition-all duration-300 shadow-2xl cursor-pointer ${
             isSpinning
               ? 'bg-zinc-800 text-zinc-500 border border-zinc-700 cursor-not-allowed scale-[0.98]'
               : 'bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] border border-amber-300'
