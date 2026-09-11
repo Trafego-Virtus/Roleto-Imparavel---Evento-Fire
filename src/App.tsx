@@ -64,12 +64,9 @@ export default function App() {
             <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
             Sorteio Exclusivo
           </div>
-          <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-1.5 sm:mb-2">
-            Gire a Roleta Imparável
+          <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+            Gire a Roleta e GANHE 1 Curso Agora
           </h1>
-          <p className="text-xs sm:text-sm text-zinc-400 max-w-sm sm:max-w-lg mx-auto leading-relaxed">
-            Descubra qual produto estratégico foi escolhido para acelerar sua jornada rumo ao topo.
-          </p>
         </div>
 
         {/* The Roulette Wheel Component */}
